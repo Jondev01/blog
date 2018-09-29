@@ -1,7 +1,7 @@
 @extends('layouts/blog')
 @section('main-content')
     <section>
-        <div class="container">
+        <div class="my-container">
             <article id="post1">
                 <img src="post1.jpg"/>
                 <div>
