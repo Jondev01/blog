@@ -13,8 +13,10 @@
 		<h1>My Blog</h1>
 		<p>Welcome to the blog of <span class="black-box">John Doe</span></p>
 	</header>
-
-    @yield('main-content')
+	<div class="container">
+		@include('inc.messages')
+		@yield('main-content')
+	</div>
     
 	<footer>
 		<button>Previous</button>
