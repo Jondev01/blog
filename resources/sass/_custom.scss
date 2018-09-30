@@ -66,8 +66,8 @@ header h1 {
 }
 
 article button{
-	position: absolute;
-	left: 15px;
+	//position: absolute;
+	//left: 15px;
 	bottom: 15px;
 	background-color: white;
 	border: 2px solid #ccc;
@@ -132,18 +132,16 @@ article .comments{
 	grid-row-end: span 2;
 }
 
-#post1 {
+.post{
+	position: relative;
+	padding: 0;
 	grid-column-start: 1;
 	grid-column-end: span 1;
-	grid-row-start: 1;
 	grid-row-end: span 4;
 	padding-bottom: 30px;
-}
 
-#post2 {
-	grid-row-start: 5;
-	grid-row-end: span 4;
-	padding-bottom: 40px;
+	.edit{
+	}
 }
 
 #popular ul{

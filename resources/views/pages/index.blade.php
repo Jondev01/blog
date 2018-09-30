@@ -39,30 +39,29 @@
             </article>	
 
             <article id="popular">
-                    <h4 class="grey-box">Popular posts</h4>
-                    <ul>
-                        <li>
-                            <img src="pop1.jpeg"/> 
-                            <span class="post-title">Title one</span><br/>
-                            <span>Description one</span> <br/>
-                        </li>
+                <h4 class="grey-box">Popular posts</h4>
+                <ul>
+                    <li>
+                        <img src="pop1.jpeg"/> 
+                        <span class="post-title">Title one</span><br/>
+                        <span>Description one</span> <br/>
+                    </li>
 
-                        <li>
-                            <img src="pop2.jpg"/><span class="post-title">Title two</span><br/>
-                            <span>Description two</span><br/>
-                        </li>
+                    <li>
+                        <img src="pop2.jpg"/><span class="post-title">Title two</span><br/>
+                        <span>Description two</span><br/>
+                    </li>
 
-                        <li>
-                            <img src="pop3.jpeg"/><span class="post-title">Title three</span><br/>
-                            <span>Description three</span><br/>
-                        </li>
+                    <li>
+                        <img src="pop3.jpeg"/><span class="post-title">Title three</span><br/>
+                        <span>Description three</span><br/>
+                    </li>
 
-                        <li id="last-post">
-                            <img src="pop4.jpeg"/><span class="post-title">Title four</span><br/>
-                            <span>Description four</span><br/>
-                        </li>
-                    </ul>
-
+                    <li id="last-post">
+                        <img src="pop4.jpeg"/><span class="post-title">Title four</span><br/>
+                        <span>Description four</span><br/>
+                    </li>
+                </ul>
             </article>	
 
             <article id="tags">
