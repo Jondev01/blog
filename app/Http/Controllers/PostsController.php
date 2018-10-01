@@ -91,6 +91,7 @@ class PostsController extends Controller
         $post = Post::findOrFail($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id();
         $post->save();
         return redirect()->route('posts.show', $id)->with('success', 'Die Änderungen wurden gespeichert.');
     }
