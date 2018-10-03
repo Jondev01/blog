@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Post;
 
 class PostsController extends Controller
@@ -38,13 +39,28 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'body' => 'required',
+            'image' => 'image|nullable|max:1999'
         ]);
+
+        //File Upload
+        if($request->hasFile('image')){
+            $fileNameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $filenameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('image')->storeAs('public/post_images', $filenameToStore);
+
+        } else {
+            $filenameToStore = 'defaultpostimage.jpg';
+        }
 
         //Create Post
         $post = new Post;
         $post->title = $request->input('title');
         $post->body = $request->input('body');
+        $post->user_id = auth()->user()->id;
+        $post->image = $filenameToStore;
         $post->save();
         return redirect()->route('posts.index')->with('success', 'Der Beitrag wurde erstellt.');
     }
@@ -87,11 +103,25 @@ class PostsController extends Controller
             'body' => 'required'
         ]);
 
+         //File Upload
+         if($request->hasFile('image')){
+            $fileNameWithExt = $request->file('image')->getClientOriginalName();
+            $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $filenameToStore = $filename.'_'.time().'.'.$extension;
+            $path = $request->file('image')->storeAs('public/post_images', $filenameToStore);
+
+        }
+
         //Create Post
         $post = Post::findOrFail($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id();
+        $post->user_id = auth()->user()->id;
+        if ($request->hasFile('image')) {
+            Storage::delete('public/post_images/' . $post->image);
+            $post->image = $filenameToStore;
+        }
         $post->save();
         return redirect()->route('posts.show', $id)->with('success', 'Die Änderungen wurden gespeichert.');
     }
@@ -105,6 +135,14 @@ class PostsController extends Controller
     public function destroy($id)
     {
         $post = Post::findOrFail($id);
+
+        //Check if correct user
+        if(auth()->user()->id !== $post->user_id){
+            return redirect()->route('posts.index')->with('error', 'Sie sind für diese Aktion nicht autorisiert');
+        }
+        if($post->image != 'defaultpostimage.jpg'){
+            Storage::delete('public/post_images'.$post->image);
+        }
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Der Beitrag wurde gelöscht.');
     }
