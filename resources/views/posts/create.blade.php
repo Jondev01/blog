@@ -12,9 +12,8 @@
             {{ Form::textarea('body', '', ['id' => 'article-ckeditor', 'class' => 'form-control', 'placeholder' => 'Text']) }}
         </div>
         <div class="form-group">
-            {{ Form::label('body', 'Text') }}
             {{ Form::file('image') }}
         </div>
         {{  Form::submit('Beitrag erstellen', ['class' => 'btn btn-primary']) }}
-        {{  Form::close() }}
+    {{  Form::close() }}
 @endsection

@@ -13,7 +13,8 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        //
+        $comments =  Comment::orderBy('created_at', 'desc');
+        return view('comments.index')->with('comments', $comments);
     }
 
     /**
@@ -23,7 +24,7 @@ class CommentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('comments.create');
     }
 
     /**
@@ -34,7 +35,17 @@ class CommentsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'body' => 'required',
+        ]);
+
+        //Create Comment
+        $comment = new Comment;
+        $comment->name = $request->input('name');
+        $comment->body = $request->input('body');
+        $comment->save();
+        return redirect()->route('posts.show')->with('success', 'Der Kommentar wurde gespiechert.');
     }
 
     /**
