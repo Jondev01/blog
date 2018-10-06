@@ -8,5 +8,6 @@
             {{ Form::label('body', 'Text') }}
             {{ Form::textarea('body', '', ['class' => 'form-control', 'placeholder' => 'Text']) }}
         </div>
+        {{ Form::hidden('post_id', $post_id) }}
         {{  Form::submit('Senden', ['class' => 'btn btn-primary']) }}
     {{  Form::close() }}

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Comment;
 
 class CommentsController extends Controller
 {
@@ -13,8 +14,6 @@ class CommentsController extends Controller
      */
     public function index()
     {
-        $comments =  Comment::orderBy('created_at', 'desc');
-        return view('comments.index')->with('comments', $comments);
     }
 
     /**
@@ -38,14 +37,16 @@ class CommentsController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'body' => 'required',
+            'post_id' => 'required'
         ]);
 
         //Create Comment
         $comment = new Comment;
         $comment->name = $request->input('name');
         $comment->body = $request->input('body');
+        $comment->post_id = $request->input('post_id');
         $comment->save();
-        return redirect()->route('posts.show')->with('success', 'Der Kommentar wurde gespiechert.');
+        return back()->with('success', 'Der Kommentar wurde gespiechert.');
     }
 
     /**
