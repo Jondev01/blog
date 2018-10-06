@@ -91,6 +91,14 @@ class CommentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $comment = Comment::findOrFail($id);
+        echo $comment->post;
+
+        //Check if correct user
+        if(auth()->user()->id !== $comment->post->user_id){
+            return redirect()->back()->with('error', 'Sie sind für diese Aktion nicht autorisiert');
+        }
+        $comment->delete();
+        return redirect()->back()->with('success', 'Der Kommentar wurde gelöscht.');
     }
 }

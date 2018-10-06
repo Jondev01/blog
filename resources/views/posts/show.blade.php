@@ -1,13 +1,18 @@
 @extends('layouts.blog')
+
 @section('main-content')
+
     <a href="{{route('posts.index')}}"><button class="btn btn-default">Zurück zur Übersicht</button></a>
     <h1>{{$post->title}}</h1>
-    <small>Geschrieben am {{$post->created_at}}</small>
-    <p>{{$post->body}}</p>
-    {{ Form::open(array('action' => ['PostsController@update', $post->id], 'method' => 'DELETE', 'class' => 'pull-right')) }}
-        {{ Form::submit('Beitrag löschen', ['class' => 'btn btn-danger']) }}
-    {{ Form::close() }}
-    <button class="btn btn-link edit"><a href="{{route('posts.edit', $post->id)}}">Bearbeiten</a></button>
+    <small>Geschrieben am {{ $post->created_at }}</small>
+    <img src="/storage/post_images/{{$post->image}}" style="width:100%">
+    <p>{!! $post->body !!}</p>
+    @if(Auth::check() && Auth::id() == $post->user->id)
+        {{ Form::open(array('action' => ['PostsController@destroy', $post->id], 'method' => 'DELETE', 'class' => 'pull-right')) }}
+            {{ Form::submit('Beitrag löschen', ['class' => 'btn btn-danger']) }}
+        {{ Form::close() }}
+        <button class="btn btn-link edit"><a href="{{route('posts.edit', $post->id)}}">Bearbeiten</a></button>
+    @endif
     @if(count($post->comments)>0)
         <div class="comments">
             @foreach($post->comments as $comment)
@@ -15,6 +20,11 @@
                     {{$comment->name}} schrieb am {{$comment->created_at}} 
                     <br/>
                     <p>{{$comment->body}}</p>
+                    @if(Auth::check() && Auth::id() == $post->user->id)
+                        {{ Form::open(array('action' => ['CommentsController@destroy', $comment->id], 'method' => 'DELETE', 'class' => 'pull-right')) }}
+                            {{ Form::submit('Kommentar löschen', ['class' => 'btn btn-danger']) }}
+                        {{ Form::close() }}
+                    @endif
                 </div>
             @endforeach
         </div>
