@@ -92,7 +92,6 @@ class CommentsController extends Controller
     public function destroy($id)
     {
         $comment = Comment::findOrFail($id);
-        echo $comment->post;
 
         //Check if correct user
         if(auth()->user()->id !== $comment->post->user_id){

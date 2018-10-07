@@ -4,26 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Blog extends Model
 {
     // Table Name
-    protected $table = 'posts';
+    protected $table = 'blogs';
     // Primary Key
     public $primaryKey = 'id';
     //Timestamps
     public $timestamps = true;
-
+    
     public function user(){
         return $this->belongsTo('App\User');
     }
 
-    public function comments(){
-        return $this->hasMany('App\Comment');
+    public function posts(){
+        return $this->hasMany('App\Post');
     }
-
-    public function blog(){
-        return $this->belongsTo('App\Blog');
-    }
-
-
 }

@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Post;
-use App\User;
+use App\Blog;
 
-class PostsController extends Controller
+class BlogsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts =  Post::orderBy('created_at', 'desc')->paginate(2);
-        return view('posts.index')->with('posts', $posts);
+        //
     }
 
     /**
@@ -27,7 +24,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('blogs.create');
     }
 
     /**
@@ -40,7 +37,9 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required',
+            'sub_title' => 'required',
+            'author' => 'required',
+            'description' => 'required',
             'image' => 'image|nullable|max:1999'
         ]);
 
@@ -53,18 +52,19 @@ class PostsController extends Controller
             $path = $request->file('image')->storeAs('public/post_images', $filenameToStore);
 
         } else {
-            $filenameToStore = 'defaultpostimage.jpg';
+            $filenameToStore = 'defaultblogimage.jpg';
         }
 
-        //Create Post
-        $post = new Post;
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id;
-        $post->blog_id = User::findOrFail($post->user_id)->blog->id;
-        $post->image = $filenameToStore;
-        $post->save();
-        return redirect()->route('posts.index')->with('success', 'Der Beitrag wurde erstellt.');
+        //Create Blog
+        $blog = new Blog;
+        $blog->title = $request->input('title');
+        $blog->sub_title = $request->input('sub_title');
+        $blog->user_id = auth()->user()->id;
+        $blog->author = $request->input('author');
+        $blog->description = $request->input('description');
+        $blog->image = $filenameToStore;
+        $blog->save();
+        return redirect()->route('home')->with('success', 'Dein Blog wurde erstellt.');
     }
 
     /**
@@ -75,8 +75,8 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        return view('posts.show')->with('post', $post);
+        $blog = Blog::findOrFail($id);
+        return view('blogs.show')->with('blog', $blog);
     }
 
     /**
@@ -87,8 +87,8 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::find($id);
-        return view('posts.edit')->with('post', $post);
+        $blog = Blog::findOrFail($id);
+        return view('blogs.edit')->with('blog', $blog);
     }
 
     /**
@@ -102,30 +102,32 @@ class PostsController extends Controller
     {
         $this->validate($request, [
             'title' => 'required',
-            'body' => 'required'
+            'sub_title' => 'required',
+            'author' => 'required',
+            'description' => 'required',
+            'image' => 'image|nullable|max:1999'
         ]);
 
-         //File Upload
-         if($request->hasFile('image')){
+        //File Upload
+        if($request->hasFile('image')){
             $fileNameWithExt = $request->file('image')->getClientOriginalName();
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('image')->getClientOriginalExtension();
             $filenameToStore = $filename.'_'.time().'.'.$extension;
             $path = $request->file('image')->storeAs('public/post_images', $filenameToStore);
 
-        }
+        } 
 
-        //update Post
-        $post = Post::findOrFail($id);
-        $post->title = $request->input('title');
-        $post->body = $request->input('body');
-        $post->user_id = auth()->user()->id;
-        if ($request->hasFile('image')) {
-            Storage::delete('public/post_images/' . $post->image);
-            $post->image = $filenameToStore;
-        }
-        $post->save();
-        return redirect()->route('posts.show', $id)->with('success', 'Die Änderungen wurden gespeichert.');
+        //Create Blog
+        $blog = Blog::findOrFail($id);
+        $blog->title = $request->input('title');
+        $blog->sub_title = $request->input('sub_title');
+        $blog->author = $request->input('author');
+        $blog->description = $request->input('description');
+        if($request->hasFile('image'))
+            $blog->image = $filenameToStore;
+        $blog->save();
+        return redirect()->route('home')->with('success', 'Die Änderungen wurden gespeichert.');
     }
 
     /**
@@ -136,16 +138,16 @@ class PostsController extends Controller
      */
     public function destroy($id)
     {
-        $post = Post::findOrFail($id);
+        $blog = Blog::findOrFail($id);
 
         //Check if correct user
-        if(auth()->user()->id !== $post->user_id){
-            return redirect()->route('posts.index')->with('error', 'Sie sind für diese Aktion nicht autorisiert');
+        if(auth()->user()->id !== $blog->user_id){
+            return redirect()->back()->with('error', 'Sie sind für diese Aktion nicht autorisiert');
         }
-        if($post->image != 'defaultpostimage.jpg'){
-            Storage::delete('public/post_images'.$post->image);
+        if($post->image != 'defaultblogimage.jpg'){
+            Storage::delete('public/blog_images'.$blog->image);
         }
         $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Der Beitrag wurde gelöscht.');
+        return redirect()->route('home')->with('success', 'Der Blog wurde gelöscht.');
     }
 }

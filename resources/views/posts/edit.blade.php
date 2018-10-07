@@ -1,7 +1,7 @@
 @extends('layouts.blog')
 
 @section('main-content')
-<a href="{{route('posts.show', $post->id)}}"><button class="btn btn-default">Zurück</button></a>
+<a href={{url()->previous()}}><button class="btn btn-default">Zurück</button></a>
     <h1>Beitrag bearbeiten</h1>
     {{ Form::open(array('action' => ['PostsController@update', $post->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data')) }}
         <div class="form-group">
