@@ -146,6 +146,6 @@ class PostsController extends Controller
             Storage::delete('public/post_images'.$post->image);
         }
         $post->delete();
-        return redirect()->route('posts.index')->with('success', 'Der Beitrag wurde gelöscht.');
+        return redirect()->route('home')->with('success', 'Der Beitrag wurde gelöscht.');
     }
 }

@@ -14,7 +14,8 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        //
+        $blogs = Blog::orderBy('created_at', 'desc')->paginate(10);
+        return view('blogs.index')->with('blogs', $blogs);
     }
 
     /**
@@ -114,7 +115,7 @@ class BlogsController extends Controller
             $filename = pathinfo($fileNameWithExt, PATHINFO_FILENAME);
             $extension = $request->file('image')->getClientOriginalExtension();
             $filenameToStore = $filename.'_'.time().'.'.$extension;
-            $path = $request->file('image')->storeAs('public/post_images', $filenameToStore);
+            $path = $request->file('image')->storeAs('public/blog_images', $filenameToStore);
 
         } 
 

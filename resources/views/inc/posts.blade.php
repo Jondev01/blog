@@ -6,8 +6,8 @@
                         <h2>{{$post->title}}</h2>
                         <small> Geschrieben am {{$post->created_at}}</small>
                         <p>{!! $post->body !!}</p>
-                        <a href="{{route('posts.show', $post->id)}}"><button>Read More<span>&raquo</span></button></a>
-                        <span class="comments">Comments <span class="black-box">0</span></span>
+                        <a class="more" href="{{route('posts.show', $post->id)}}"><button>Mehr<span>&raquo</span></button></a>
+                    <div class="comments">Kommentare <span class="black-box">{{count($post->comments)}}</span></div>
                     <div>
                 </article>
             @endforeach

@@ -86,14 +86,6 @@ button span{
 article ul{
 	list-style-type: none;
 }
-article .comments{
-	position:absolute;
-	bottom: 15px;
-	right: 35px;
-	transform: translateX(-100%);
-	transform: translateY(-50%);
-	font-weight: bold;
-}
 
 .my-container article div{
 	padding: 10px 15px 15px 15px;
@@ -140,7 +132,21 @@ article .comments{
 	grid-row-end: span 4;
 	padding-bottom: 30px;
 
-	.edit{
+	.more{
+		position: absolute;
+		bottom: 0px;
+		left: 35px;
+		transform: translateY(-50%);
+		font-weight: bold;
+	}
+
+	.comments{
+		position: absolute;
+		bottom: 0px;
+		right: 35px;
+		transform: translateX(-100%);
+		transform: translateY(-50%);
+		font-weight: bold;
 	}
 }
 
@@ -207,8 +213,8 @@ footer button{
 	font-size: 1.05rem;
 }
 
-@media screen and (max-width: 1200px){
-	.container{
+@media only screen and (max-width: 767px) {
+	.my-container{
 		display: block;
 		width: 90%;
 	}

@@ -1,8 +1,9 @@
-@extends('layouts.blog')
+@extends('layouts.app')
 
-@section('main-content')
-<a href={{url()->previous()}}><button class="btn btn-default">Zurück</button></a>
-    <h1>Beitrag bearbeiten</h1>
+@section('content')
+<div class="container">
+    <a href={{url()->previous()}}><button class="btn btn-default">Zurück</button></a>
+    <h2>Beitrag bearbeiten</h2>
     {{ Form::open(array('action' => ['PostsController@update', $post->id], 'method' => 'PUT', 'enctype' => 'multipart/form-data')) }}
         <div class="form-group">
             {{ Form::label('title', 'Titel') }}
@@ -17,5 +18,6 @@
             {{ Form::file('image') }}
         </div>
         {{ Form::submit('Speichern', ['class' => 'btn btn-primary']) }}
-        {{ Form::close() }}
+    {{ Form::close() }}
+</div>
 @endsection

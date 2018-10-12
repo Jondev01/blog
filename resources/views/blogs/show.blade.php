@@ -8,14 +8,14 @@
     <div class="container">
         @include('inc.messages')
         <div class="my-container">
-            @include('inc.posts', ['posts' => $blog->posts()->orderBy('created_at', 'desc')->paginate(2)])
             <article id="my-info">
-                <img src="/storage/post_images/{{$blog->image}}"/>
+                <img src="/storage/blog_images/{{$blog->image}}"/>
                 <div>
                 <h3>{{$blog->author}}</h3>
                     <p>{{$blog->description}}</p>
                 </div>
             </article>	
+            @include('inc.posts', ['posts' => $blog->posts()->orderBy('created_at', 'desc')->paginate(2)])
             <article id="popular">
                 <h4 class="grey-box">Popular posts</h4>
                 <ul>

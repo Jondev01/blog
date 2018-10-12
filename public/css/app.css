@@ -10550,17 +10550,6 @@ article ul {
   list-style-type: none;
 }
 
-article .comments {
-  position: absolute;
-  bottom: 15px;
-  right: 35px;
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  font-weight: bold;
-}
-
 .my-container article div {
   padding: 10px 15px 15px 15px;
 }
@@ -10605,6 +10594,26 @@ h3 {
   grid-column-end: span 1;
   grid-row-end: span 4;
   padding-bottom: 30px;
+}
+
+.post .more {
+  position: absolute;
+  bottom: 0px;
+  left: 35px;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-weight: bold;
+}
+
+.post .comments {
+  position: absolute;
+  bottom: 0px;
+  right: 35px;
+  -webkit-transform: translateX(-100%);
+          transform: translateX(-100%);
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  font-weight: bold;
 }
 
 #popular ul {
@@ -10670,8 +10679,8 @@ footer button {
   font-size: 1.05rem;
 }
 
-@media screen and (max-width: 1200px) {
-  .container {
+@media only screen and (max-width: 767px) {
+  .my-container {
     display: block;
     width: 90%;
   }

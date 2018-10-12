@@ -1,4 +1,8 @@
-<h2>Erstellen Sie jetzt Ihren Blog!</h2>
+@extends('layouts.app')
+
+@section('content')
+<div class="container">
+    <h2>Bearbeiten Sie jetzt Ihren Blog</h2>
     {{ Form::open(array('action' => 'BlogsController@store', 'enctype' => 'multipart/form-data')) }}
         <div class="form-group">
             {{ Form::label('title', 'Titel des Blogs') }}
@@ -21,3 +25,5 @@
             {{ Form::file('image') }}
         </div>
     {{  Form::close() }}
+</div>
+@endsection('content')

@@ -18,7 +18,6 @@
 Route::get('/', 'PagesController@index');
 
 Route::resource('posts', 'PostsController');
-
 Route::resource('comments', 'CommentsController');
 Route::resource('blogs', 'BlogsController');
 

@@ -9,13 +9,16 @@
 </head>
 
 <body>
+	<div class="app">
+	@include('inc.navbar')
+</div>
 	<header>
 		<h1>My Blog</h1>
 		<p>Welcome to the blog of <span class="black-box">John Doe</span></p>
 	</header>
 	<div class="container">
 		@include('inc.messages')
-		@yield('main-content')
+		@yield('content')
 	</div>
     
 	<footer>
