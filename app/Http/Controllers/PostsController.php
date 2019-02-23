@@ -64,7 +64,7 @@ class PostsController extends Controller
         $post->blog_id = User::findOrFail($post->user_id)->blog->id;
         $post->image = $filenameToStore;
         $post->save();
-        return redirect()->route('posts.index')->with('success', 'Der Beitrag wurde erstellt.');
+        return redirect()->route('home')->with('success', 'Der Beitrag wurde erstellt.');
     }
 
     /**
