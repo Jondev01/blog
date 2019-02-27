@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h2>Bearbeiten Sie jetzt Ihren Blog</h2>
-    {{ Form::open(array('action' => 'BlogsController@store', 'enctype' => 'multipart/form-data')) }}
+    {{ Form::open(array('action' => ['BlogsController@update', $blog->id], 'method' => 'PUT',  'enctype' => 'multipart/form-data')) }}
         <div class="form-group">
             {{ Form::label('title', 'Titel des Blogs') }}
             {{ Form::text('title', $blog->title, ['class' => 'form-control', 'placeholder' => 'Mein Blog']) }}
@@ -24,6 +24,7 @@
                 {{ Form::label('image', 'Fügen Sie ein Profilbild hinzu.') }}
             {{ Form::file('image') }}
         </div>
+        {{ Form::submit('Speichern', ['class' => 'btn btn-primary']) }}
     {{  Form::close() }}
 </div>
 @endsection('content')
